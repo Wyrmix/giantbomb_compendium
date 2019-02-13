@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fimber/fimber.dart';
 import 'package:flappy_bombs/constants.dart';
 import 'package:flappy_bombs/data/auth/auth_repository.dart';
+import 'package:flappy_bombs/data/video/video_details_entity.dart';
 import 'package:flappy_bombs/data/video/video_entity.dart';
 import 'package:flappy_bombs/entity_factory.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -20,6 +21,11 @@ class VideoRepository {
   Future<VideoEntity> getVideos() async {
     var response = await client.get(await _url("videos"));
     return EntityFactory.generateOBJ<VideoEntity>(jsonDecode(response.body));
+  }
+
+  Future<VideoDetailsEntity> getVideoDetails(String guid) async {
+    var response = await client.get(await _url("video/$guid/"));
+    return EntityFactory.generateOBJ<VideoDetailsEntity>(jsonDecode(response.body));
   }
 
   Future<String> _url(String subPath) async {

@@ -113,7 +113,7 @@ class GiganteRouter extends AppRouter {
       _scaffoldWithDebugDrawer(BrowseScreen(), "Browse");
 
   static final detailsHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-    return Nav.scaffoldWithDebugDrawer(DetailsScreen(VideoResult()), title: "Details");
+    return Nav.scaffoldWithDebugDrawer(DetailsScreen(params["guid"]?.first), title: "Details");
   });
 
   static final downloadsHandler =

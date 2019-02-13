@@ -34,7 +34,7 @@ class BrowseCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => Nav.scaffoldWithDebugDrawer(
-                    DetailsScreen(video),
+                    DetailsScreen(video.guid),
                     title: "Details"),
               ),
             );

@@ -1,29 +1,23 @@
-import 'package:fimber/fimber.dart';
-
-class VideoEntity {
+class VideoDetailsEntity {
 	int numberOfTotalResults;
 	int statusCode;
 	int offset;
 	int numberOfPageResults;
 	int limit;
 	String error;
-	List<VideoResult> results;
+	VideoDetailsResults results;
 	String version;
 
-	VideoEntity({this.numberOfTotalResults, this.statusCode, this.offset, this.numberOfPageResults, this.limit, this.error, this.results, this.version});
+	VideoDetailsEntity({this.numberOfTotalResults, this.statusCode, this.offset, this.numberOfPageResults, this.limit, this.error, this.results, this.version});
 
-	VideoEntity.fromJson(Map<String, dynamic> json) {
-		Fimber.d("parsing [$json]");
+	VideoDetailsEntity.fromJson(Map<String, dynamic> json) {
 		numberOfTotalResults = json['number_of_total_results'];
 		statusCode = json['status_code'];
 		offset = json['offset'];
 		numberOfPageResults = json['number_of_page_results'];
 		limit = json['limit'];
 		error = json['error'];
-		if (json['results'] != null) {
-			results = new List<VideoResult>();
-			json['results'].forEach((v) { results.add(new VideoResult.fromJson(v)); });
-		}
+		results = json['results'] != null ? new VideoDetailsResults.fromJson(json['results']) : null;
 		version = json['version'];
 	}
 
@@ -36,18 +30,18 @@ class VideoEntity {
 		data['limit'] = this.limit;
 		data['error'] = this.error;
 		if (this.results != null) {
-      data['results'] = this.results.map((v) => v.toJson()).toList();
+      data['results'] = this.results.toJson();
     }
 		data['version'] = this.version;
 		return data;
 	}
 }
 
-class VideoResult {
-	List<VideoResultsAssociation> associations;
+class VideoDetailsResults {
+	List<VideoDetailsResultsAssociation> associations;
 	String highUrl;
 	String lowUrl;
-	VideoResultsImage image;
+	VideoDetailsResultsImage image;
 	Null savedTime;
 	String siteDetailUrl;
 	String deck;
@@ -57,26 +51,26 @@ class VideoResult {
 	String url;
 	String videoType;
 	String embedPlayer;
-	VideoResultsVideoShow videoShow;
+	VideoDetailsResultsVideoShow videoShow;
 	String apiDetailUrl;
 	bool premium;
 	String name;
 	String guid;
 	int id;
-	List<VideoResultsVideoCategory> videoCategories;
+	List<VideoDetailsResultsVideoCategory> videoCategories;
 	String publishDate;
 	String user;
 
-	VideoResult({this.associations, this.highUrl, this.lowUrl, this.image, this.savedTime, this.siteDetailUrl, this.deck, this.hdUrl, this.lengthSeconds, this.youtubeId, this.url, this.videoType, this.embedPlayer, this.videoShow, this.apiDetailUrl, this.premium, this.name, this.guid, this.id, this.videoCategories, this.publishDate, this.user});
+	VideoDetailsResults({this.associations, this.highUrl, this.lowUrl, this.image, this.savedTime, this.siteDetailUrl, this.deck, this.hdUrl, this.lengthSeconds, this.youtubeId, this.url, this.videoType, this.embedPlayer, this.videoShow, this.apiDetailUrl, this.premium, this.name, this.guid, this.id, this.videoCategories, this.publishDate, this.user});
 
-	VideoResult.fromJson(Map<String, dynamic> json) {
+	VideoDetailsResults.fromJson(Map<String, dynamic> json) {
 		if (json['associations'] != null) {
-			associations = new List<VideoResultsAssociation>();
-			json['associations'].forEach((v) { associations.add(new VideoResultsAssociation.fromJson(v)); });
+			associations = new List<VideoDetailsResultsAssociation>();
+			json['associations'].forEach((v) { associations.add(new VideoDetailsResultsAssociation.fromJson(v)); });
 		}
 		highUrl = json['high_url'];
 		lowUrl = json['low_url'];
-		image = json['image'] != null ? new VideoResultsImage.fromJson(json['image']) : null;
+		image = json['image'] != null ? new VideoDetailsResultsImage.fromJson(json['image']) : null;
 		savedTime = json['saved_time'];
 		siteDetailUrl = json['site_detail_url'];
 		deck = json['deck'];
@@ -86,15 +80,15 @@ class VideoResult {
 		url = json['url'];
 		videoType = json['video_type'];
 		embedPlayer = json['embed_player'];
-		videoShow = json['video_show'] != null ? new VideoResultsVideoShow.fromJson(json['video_show']) : null;
+		videoShow = json['video_show'] != null ? new VideoDetailsResultsVideoShow.fromJson(json['video_show']) : null;
 		apiDetailUrl = json['api_detail_url'];
 		premium = json['premium'];
 		name = json['name'];
 		guid = json['guid'];
 		id = json['id'];
 		if (json['video_categories'] != null) {
-			videoCategories = new List<VideoResultsVideoCategory>();
-			json['video_categories'].forEach((v) { videoCategories.add(new VideoResultsVideoCategory.fromJson(v)); });
+			videoCategories = new List<VideoDetailsResultsVideoCategory>();
+			json['video_categories'].forEach((v) { videoCategories.add(new VideoDetailsResultsVideoCategory.fromJson(v)); });
 		}
 		publishDate = json['publish_date'];
 		user = json['user'];
@@ -134,23 +128,18 @@ class VideoResult {
 		data['user'] = this.user;
 		return data;
 	}
-
-	@override
-	String toString() {
-		return this.toJson().toString();
-	}
 }
 
-class VideoResultsAssociation {
+class VideoDetailsResultsAssociation {
 	String apiDetailUrl;
 	String siteDetailUrl;
 	String name;
 	String guid;
 	int id;
 
-	VideoResultsAssociation({this.apiDetailUrl, this.siteDetailUrl, this.name, this.guid, this.id});
+	VideoDetailsResultsAssociation({this.apiDetailUrl, this.siteDetailUrl, this.name, this.guid, this.id});
 
-	VideoResultsAssociation.fromJson(Map<String, dynamic> json) {
+	VideoDetailsResultsAssociation.fromJson(Map<String, dynamic> json) {
 		apiDetailUrl = json['api_detail_url'];
 		siteDetailUrl = json['site_detail_url'];
 		name = json['name'];
@@ -169,7 +158,7 @@ class VideoResultsAssociation {
 	}
 }
 
-class VideoResultsImage {
+class VideoDetailsResultsImage {
 	String iconUrl;
 	String screenLargeUrl;
 	String thumbUrl;
@@ -181,9 +170,9 @@ class VideoResultsImage {
 	String mediumUrl;
 	String imageTags;
 
-	VideoResultsImage({this.iconUrl, this.screenLargeUrl, this.thumbUrl, this.tinyUrl, this.smallUrl, this.superUrl, this.originalUrl, this.screenUrl, this.mediumUrl, this.imageTags});
+	VideoDetailsResultsImage({this.iconUrl, this.screenLargeUrl, this.thumbUrl, this.tinyUrl, this.smallUrl, this.superUrl, this.originalUrl, this.screenUrl, this.mediumUrl, this.imageTags});
 
-	VideoResultsImage.fromJson(Map<String, dynamic> json) {
+	VideoDetailsResultsImage.fromJson(Map<String, dynamic> json) {
 		iconUrl = json['icon_url'];
 		screenLargeUrl = json['screen_large_url'];
 		thumbUrl = json['thumb_url'];
@@ -212,19 +201,19 @@ class VideoResultsImage {
 	}
 }
 
-class VideoResultsVideoShow {
+class VideoDetailsResultsVideoShow {
 	String apiDetailUrl;
-	VideoResultsVideoShowImage image;
+	VideoDetailsResultsVideoShowImage image;
 	String siteDetailUrl;
 	int id;
 	int position;
 	String title;
 
-	VideoResultsVideoShow({this.apiDetailUrl, this.image, this.siteDetailUrl, this.id, this.position, this.title});
+	VideoDetailsResultsVideoShow({this.apiDetailUrl, this.image, this.siteDetailUrl, this.id, this.position, this.title});
 
-	VideoResultsVideoShow.fromJson(Map<String, dynamic> json) {
+	VideoDetailsResultsVideoShow.fromJson(Map<String, dynamic> json) {
 		apiDetailUrl = json['api_detail_url'];
-		image = json['image'] != null ? new VideoResultsVideoShowImage.fromJson(json['image']) : null;
+		image = json['image'] != null ? new VideoDetailsResultsVideoShowImage.fromJson(json['image']) : null;
 		siteDetailUrl = json['site_detail_url'];
 		id = json['id'];
 		position = json['position'];
@@ -245,7 +234,7 @@ class VideoResultsVideoShow {
 	}
 }
 
-class VideoResultsVideoShowImage {
+class VideoDetailsResultsVideoShowImage {
 	String iconUrl;
 	String screenLargeUrl;
 	String thumbUrl;
@@ -257,9 +246,9 @@ class VideoResultsVideoShowImage {
 	String mediumUrl;
 	String imageTags;
 
-	VideoResultsVideoShowImage({this.iconUrl, this.screenLargeUrl, this.thumbUrl, this.tinyUrl, this.smallUrl, this.superUrl, this.originalUrl, this.screenUrl, this.mediumUrl, this.imageTags});
+	VideoDetailsResultsVideoShowImage({this.iconUrl, this.screenLargeUrl, this.thumbUrl, this.tinyUrl, this.smallUrl, this.superUrl, this.originalUrl, this.screenUrl, this.mediumUrl, this.imageTags});
 
-	VideoResultsVideoShowImage.fromJson(Map<String, dynamic> json) {
+	VideoDetailsResultsVideoShowImage.fromJson(Map<String, dynamic> json) {
 		iconUrl = json['icon_url'];
 		screenLargeUrl = json['screen_large_url'];
 		thumbUrl = json['thumb_url'];
@@ -288,15 +277,15 @@ class VideoResultsVideoShowImage {
 	}
 }
 
-class VideoResultsVideoCategory {
+class VideoDetailsResultsVideoCategory {
 	String apiDetailUrl;
 	String siteDetailUrl;
 	String name;
 	int id;
 
-	VideoResultsVideoCategory({this.apiDetailUrl, this.siteDetailUrl, this.name, this.id});
+	VideoDetailsResultsVideoCategory({this.apiDetailUrl, this.siteDetailUrl, this.name, this.id});
 
-	VideoResultsVideoCategory.fromJson(Map<String, dynamic> json) {
+	VideoDetailsResultsVideoCategory.fromJson(Map<String, dynamic> json) {
 		apiDetailUrl = json['api_detail_url'];
 		siteDetailUrl = json['site_detail_url'];
 		name = json['name'];
